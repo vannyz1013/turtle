@@ -1,0 +1,95 @@
+/* The loading screen. */
+.loader {
+  position: fixed;
+  inset: 0;
+  z-index: 10;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 1rem;
+  padding: var(--gutter);
+  background: radial-gradient(circle at 50% 40%, #fffaf0, var(--ivory) 45%, #e4f1f7);
+  transition:
+    opacity 0.9s ease,
+    visibility 0s linear 0.9s;
+}
+
+.loader.is-done {
+  opacity: 0;
+  visibility: hidden;
+}
+
+.loader-sun {
+  position: relative;
+  width: 92px;
+  height: 92px;
+}
+
+.loader-core {
+  position: absolute;
+  inset: 22px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff6cf, #f5d77e 70%);
+  box-shadow: 0 0 40px 10px rgba(245, 223, 155, 0.6);
+  animation: sun-breathe 2.4s ease-in-out infinite;
+}
+
+.loader-rays {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: repeating-conic-gradient(rgba(245, 214, 120, 0.85) 0 8deg, transparent 8deg 30deg);
+  -webkit-mask: radial-gradient(circle, transparent 54%, #000 56%, #000 70%, transparent 72%);
+  mask: radial-gradient(circle, transparent 54%, #000 56%, #000 70%, transparent 72%);
+  animation: sun-turn 14s linear infinite;
+}
+
+.loader-title {
+  margin: 0;
+  font: 600 clamp(1.6rem, 6vw, 2.2rem) var(--font-display);
+  color: var(--ink);
+}
+
+.loader-track {
+  width: min(70vw, 16rem);
+  height: 8px;
+  border-radius: 99px;
+  background: rgba(169, 214, 235, 0.35);
+  overflow: hidden;
+}
+
+.loader-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--sky), var(--yellow), var(--pink));
+  transform-origin: 0 50%;
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+.loader-note {
+  margin: 0;
+  font-size: 0.95rem;
+  color: var(--ink-soft);
+  font-variant-numeric: tabular-nums;
+}
+
+@keyframes sun-turn {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes sun-breathe {
+  50% {
+    transform: scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-rays,
+  .loader-core {
+    animation: none;
+  }
+}

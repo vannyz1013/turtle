@@ -1,0 +1,137 @@
+/* The 2D garden for browsers without WebGL 2. */
+body.is-fallback,
+body.is-fallback #app {
+  overflow-y: auto;
+  position: static;
+  height: auto;
+  min-height: 100%;
+}
+
+.fallback {
+  position: relative;
+  min-height: 100vh;
+  padding: 4rem var(--gutter) 5rem;
+  display: grid;
+  gap: 3.5rem;
+  justify-items: center;
+  background: linear-gradient(180deg, #a9d6eb 0%, #c7e5f2 30%, #faf8f1 70%, #eef3e6 100%);
+  text-align: center;
+}
+
+.fb-sky {
+  position: absolute;
+  inset: 0 0 auto;
+  height: 22rem;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.fb-sun {
+  position: absolute;
+  top: 2.5rem;
+  right: 12%;
+  width: 5rem;
+  height: 5rem;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #fff6cf, #f5d77e 70%);
+  box-shadow: 0 0 60px 20px rgba(245, 223, 155, 0.6);
+}
+
+.fb-cloud {
+  position: absolute;
+  width: 9rem;
+  height: 3rem;
+  border-radius: 99px;
+  background: #fff;
+  opacity: 0.9;
+  box-shadow:
+    2rem -1.4rem 0 0.4rem #fff,
+    4.4rem -0.6rem 0 0 #fff;
+  animation: fb-drift 40s linear infinite;
+}
+
+.fb-cloud.c1 {
+  top: 6rem;
+  left: -10rem;
+}
+.fb-cloud.c2 {
+  top: 12rem;
+  left: -20rem;
+  animation-duration: 55s;
+  transform: scale(0.7);
+}
+.fb-cloud.c3 {
+  top: 3rem;
+  left: -30rem;
+  animation-duration: 70s;
+}
+
+@keyframes fb-drift {
+  to {
+    translate: 140vw 0;
+  }
+}
+
+.fb-section {
+  position: relative;
+  width: min(100%, 36rem);
+  display: grid;
+  gap: 1rem;
+  justify-items: center;
+}
+
+.fb-hero .panel-title.is-hero {
+  color: var(--ink);
+  text-shadow: 0 2px 20px rgba(255, 255, 255, 0.8);
+}
+
+.fb-note {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--ink-soft);
+}
+
+.fb-wish {
+  min-height: 3em;
+  margin: 0;
+  font: 500 1.15rem var(--font-display);
+}
+
+.fb-wish.pop {
+  animation: label-pop 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.fb-flowers {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.6rem;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  width: 100%;
+}
+
+.fb-flowers li {
+  padding: 0.8rem 1rem;
+  text-wrap: balance;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 0 0 1px rgba(232, 191, 192, 0.8);
+}
+
+.fb-flowers li::before {
+  content: "🌸 ";
+}
+
+.fb-letter {
+  height: auto;
+  text-align: left;
+  border-radius: 10px;
+  box-shadow: var(--shadow);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fb-cloud {
+    animation: none;
+  }
+}

@@ -1,0 +1,29 @@
+/* Public edition theme: colours and fonts for the interface.
+   The 3D world's colours are in palette.ts next to this file. */
+@import "@fontsource/fredoka/latin-500.css";
+@import "@fontsource/fredoka/latin-600.css";
+@import "@fontsource/nunito/latin-400.css";
+@import "@fontsource/nunito/latin-600.css";
+@import "@fontsource/nunito/latin-400-italic.css";
+
+:root {
+  /* Core palette from the brief. */
+  --ivory: #faf8f1;
+  --sky: #a9d6eb;
+  --powder: #c7e5f2;
+  --sage: #a7b99a;
+  --yellow: #f5df9b;
+  --pink: #e8bfc0;
+
+  --ink: #4e4a47;
+  --ink-soft: #6f6863;
+  --gold: #e3b95c;
+  --glass: rgba(250, 248, 241, 0.74);
+  --glass-border: rgba(255, 255, 255, 0.85);
+  --shadow: 0 18px 50px -18px rgba(86, 104, 120, 0.45), 0 4px 14px -6px rgba(86, 104, 120, 0.25);
+
+  /* Latin glyphs come from Fredoka/Nunito; Chinese falls back to each system's own CJK font. */
+  --font-cjk: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans SC", "Noto Sans CJK SC", "Source Han Sans SC";
+  --font-display: "Fredoka", "Nunito", var(--font-cjk), ui-rounded, "Segoe UI", system-ui, sans-serif;
+  --font-body: "Nunito", var(--font-cjk), ui-rounded, "Segoe UI", system-ui, sans-serif;
+}

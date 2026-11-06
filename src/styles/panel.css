@@ -1,0 +1,148 @@
+/* The caption card that carries each scene's words. */
+.panel {
+  position: absolute;
+  left: 50%;
+  width: min(calc(100% - 2 * var(--gutter)), 34rem);
+  padding: 1.3rem 1.6rem 1.4rem;
+  border-radius: 28px;
+  background: var(--glass);
+  -webkit-backdrop-filter: blur(16px) saturate(1.2);
+  backdrop-filter: blur(16px) saturate(1.2);
+  box-shadow:
+    inset 0 0 0 1px var(--glass-border),
+    var(--shadow);
+  text-align: center;
+  opacity: 0;
+  visibility: hidden;
+  transform: translate(-50%, 14px) scale(0.98);
+  transition:
+    opacity 0.45s ease,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s linear 0.45s;
+}
+
+.panel.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translate(-50%, 0) scale(1);
+  transition:
+    opacity 0.45s ease,
+    transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
+    visibility 0s;
+}
+
+.panel[data-placement="bottom"] {
+  bottom: max(20px, calc(env(safe-area-inset-bottom) + 12px));
+}
+
+.panel[data-placement="top"] {
+  top: max(64px, calc(env(safe-area-inset-top) + 56px));
+}
+
+.panel[data-placement="center"] {
+  top: 50%;
+  margin-top: -6rem;
+}
+
+/* Hero cards float freely over the sky: no box, just glowing type. */
+.panel[data-size="hero"] {
+  background: none;
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  box-shadow: none;
+  width: min(calc(100% - 2 * var(--gutter)), 44rem);
+}
+
+.panel-body {
+  display: grid;
+  gap: 0.55rem;
+  justify-items: center;
+}
+
+.panel-eyebrow {
+  margin: 0;
+  font: 600 0.8rem var(--font-display);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #8aa7b8;
+}
+
+.panel-title {
+  margin: 0;
+  font: 600 clamp(1.45rem, 4.6vw, 1.9rem) / 1.15 var(--font-display);
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.panel-title.is-hero {
+  font-size: clamp(2.5rem, 9vw, 4.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.01em;
+  color: #5b4b40;
+  text-shadow:
+    0 0 18px rgba(255, 252, 240, 0.95),
+    0 0 42px rgba(255, 246, 220, 0.9),
+    0 3px 0 rgba(255, 255, 255, 0.7);
+}
+
+.panel-text {
+  margin: 0;
+  max-width: 30em;
+  font-size: clamp(1rem, 2.6vw, 1.12rem);
+  color: var(--ink-soft);
+  text-wrap: pretty;
+}
+
+.panel[data-size="hero"] .panel-text {
+  color: #5f5650;
+  font-weight: 600;
+  font-size: clamp(1.05rem, 3vw, 1.3rem);
+  text-shadow:
+    0 0 12px rgba(255, 252, 240, 1),
+    0 0 26px rgba(255, 248, 228, 0.95);
+}
+
+/* A soft pool of light behind hero text, so it reads over any part of the sky. */
+.panel[data-size="hero"]::before {
+  content: "";
+  position: absolute;
+  inset: -10% -6%;
+  z-index: -1;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(255, 251, 238, 0.75), rgba(255, 251, 238, 0.35) 55%, transparent);
+  pointer-events: none;
+}
+
+.panel-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 0.45rem;
+}
+
+.panel[data-size="hero"] .panel-actions {
+  margin-top: 0.9rem;
+}
+
+.panel[data-size="hero"] .btn-primary {
+  font-size: 1.1rem;
+  padding: 0.9em 2em;
+}
+
+@media (max-width: 480px) {
+  .panel {
+    padding: 1.05rem 1.1rem 1.15rem;
+    border-radius: 24px;
+  }
+  .panel[data-placement="top"] {
+    top: max(70px, calc(env(safe-area-inset-top) + 60px));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .panel,
+  .panel.is-visible {
+    transform: translate(-50%, 0);
+  }
+}

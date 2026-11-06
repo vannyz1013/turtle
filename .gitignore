@@ -21,3 +21,9 @@ desktop.ini
 .vscode/
 .idea/
 *~
+
+# Private editions must never live in this public repository.
+.private-terms
+private/
+edition-private/
+*.private.*
