@@ -37,8 +37,16 @@ export const SPOT = {
   gardenCenter: v(46, -3, -41.6),
   robotGarden: v(45.5, -3, -38.4),
   robotLetter: v(44.2, -3, -40.4),
-  robotFinale: v(46, -3, -35.4),
+  // Off to the right of the happiness pocket (46, -33.2), which otherwise sits between the
+  // finale's opening camera and Sunny and hides half of Sunny's face.
+  robotFinale: v(47.8, -3, -35.8),
 };
+
+/**
+ * In the garden, wish flowers must not stand between the camera and Sunny. Flowers planned
+ * inside this corridor (from Sunny towards the camera, on the ground plane) are moved sideways.
+ */
+export const GARDEN_SIGHTLINE = { halfWidth: 0.95, length: 4 };
 
 export const SHOTS = {
   welcomeStart: shot([19, 11, 33], [0, 1, 0]),
@@ -47,9 +55,11 @@ export const SHOTS = {
   doorThrough: shot([-0.8, 1.35, -3.7], [-0.8, 1.3, -9]),
   pocketArrive: shot([46, -1.2, -23.5], [46, -1.6, -33.2]),
   pocket: shot([46.9, -1.0, -28.3], [46, -1.75, -33.2]),
-  garden: shot([50.8, 0.9, -33.6], [45.8, -2.3, -41.6]),
+  // Portrait screens get a closer view aimed between Sunny and the flowers, so Sunny is the
+  // focal point instead of sitting at the left edge (and the pocket stays out of frame).
+  garden: shot([50.8, 0.9, -33.6], [45.8, -2.3, -41.6], { pos: [50.6, 1.8, -32.0], target: [44.9, -2.3, -39.9] }),
   letter: shot([43.6, -1.9, -35.6], [46.5, -0.4, -44]),
-  finaleStart: shot([46.5, -1.55, -31.6], [46, -2.0, -35.4]),
+  finaleStart: shot([48.3, -1.55, -32.0], [47.8, -2.0, -35.8]),
   // Portrait screens look along the line between the islands, so they stack vertically
   // (garden island mid-frame, welcome island below) instead of falling off the sides.
   finaleEnd: shot([78, 13, 30], [25, -2, -20], { pos: [-21, 18, 23], target: [23, 1, -19] }),

@@ -37,6 +37,47 @@ export function planWishSpots(): Vector3[] {
   return out;
 }
 
+/**
+ * Moves any planned spot that stands between a viewer and the subject (on the ground plane)
+ * sideways, just out of that corridor, keeping its distance from the other flowers.
+ * Spots outside the corridor are returned unchanged, so only obstructing flowers move.
+ */
+export function clearSightline(
+  spots: readonly Vector3[],
+  subject: Vector3,
+  viewers: readonly Vector3[],
+  halfWidth: number,
+  length: number,
+  minGap = 1.15,
+): Vector3[] {
+  const out = spots.map((s) => s.clone());
+  for (let i = 0; i < out.length; i++) {
+    for (const viewer of viewers) {
+      const dx = viewer.x - subject.x;
+      const dz = viewer.z - subject.z;
+      const len = Math.hypot(dx, dz) || 1;
+      const ux = dx / len;
+      const uz = dz / len;
+      const px = out[i].x - subject.x;
+      const pz = out[i].z - subject.z;
+      const along = px * ux + pz * uz; // towards the viewer
+      if (along < -0.3 || along > length) continue;
+      const side = -px * uz + pz * ux; // signed sideways distance from the sightline
+      if (Math.abs(side) >= halfWidth) continue;
+      const dir = side >= 0 ? 1 : -1;
+      let off = halfWidth + 0.15;
+      const at = () => new Vector3(subject.x + ux * along - uz * off * dir, out[i].y, subject.z + uz * along + ux * off * dir);
+      let candidate = at();
+      while (out.some((q, j) => j !== i && q.distanceTo(candidate) < minGap) && off < halfWidth + 3) {
+        off += 0.2;
+        candidate = at();
+      }
+      out[i] = candidate;
+    }
+  }
+  return out;
+}
+
 const petalGeo = new SphereGeometry(0.16, 16, 8).scale(0.58, 0.15, 1).translate(0, 0, 0.15);
 const innerGeo = new SphereGeometry(0.11, 12, 8).scale(0.58, 0.15, 1).translate(0, 0, 0.11);
 const leafGeo = new SphereGeometry(0.1, 10, 6).scale(0.45, 0.08, 1).translate(0, 0, 0.1);

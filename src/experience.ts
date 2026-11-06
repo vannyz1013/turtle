@@ -14,8 +14,8 @@ import { createBursts } from "./objects/burst";
 import { MagicDoor } from "./objects/door";
 import { HappinessPocket } from "./objects/pocket";
 import { Robot } from "./objects/robot";
-import { planWishSpots, WishGarden } from "./objects/wishGarden";
-import { SPOT } from "./scene/layout";
+import { clearSightline, planWishSpots, WishGarden } from "./objects/wishGarden";
+import { GARDEN_SIGHTLINE, SHOTS, SPOT } from "./scene/layout";
 import { World } from "./scene/world";
 import { SPARKLES, type StoryContext } from "./story/context";
 import { runStory } from "./story/director";
@@ -81,7 +81,17 @@ export async function startExperience(root: HTMLElement, caps: Capabilities, rep
   door.group.position.set(SPOT.door.x, world.islandA.heightAt(SPOT.door.x, SPOT.door.z) - 0.05, SPOT.door.z);
   const pocket = new HappinessPocket(motion);
   pocket.group.position.set(SPOT.pocket.x, world.islandB.heightAt(SPOT.pocket.x, SPOT.pocket.z) - 0.03, SPOT.pocket.z);
-  const garden = new WishGarden(world.islandB, wishSpots, extensions.flowers?.tones);
+  // Wish flowers keep clear of the line from the garden cameras (landscape and portrait) to Sunny.
+  // Decorative flowers still use the original plan, so the rest of the garden is unchanged.
+  const gardenView = SHOTS.garden;
+  const flowerSpots = clearSightline(
+    wishSpots,
+    SPOT.robotGarden,
+    [gardenView.pos, gardenView.portrait?.pos ?? gardenView.pos],
+    GARDEN_SIGHTLINE.halfWidth,
+    GARDEN_SIGHTLINE.length,
+  );
+  const garden = new WishGarden(world.islandB, flowerSpots, extensions.flowers?.tones);
   stage.scene.add(robot.root, door.group, pocket.group, garden.group);
   await installExtras(extensions, env, stage, picker);
   report(0.72);
