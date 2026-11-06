@@ -1,0 +1,23 @@
+# Dependencies and build output
+node_modules/
+dist/
+
+# Logs and caches
+*.log
+.vite/
+.cache/
+
+# Local-only files
+.env
+.env.*
+tmp/
+qa-artifacts/
+*.local
+
+# OS and editor clutter
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+*~

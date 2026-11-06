@@ -1,0 +1,26 @@
+:root {
+  --sun: #ffd36e;
+  --cream: #fff4d6;
+  --sky: #bfe3ff;
+  --ink: #4a3b2f;
+}
+
+html,
+body {
+  margin: 0;
+  height: 100%;
+  background: var(--cream);
+  color: var(--ink);
+  font-family: system-ui, sans-serif;
+}
+
+#app {
+  display: grid;
+  place-items: center;
+  height: 100%;
+}
+
+.placeholder {
+  text-align: center;
+  font-size: 1.5rem;
+}
